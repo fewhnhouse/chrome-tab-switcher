@@ -1,0 +1,27 @@
+{
+    "manifest_version": 2,
+    "name": "Fast Tab Switcher",
+    "description": "switch tabs via shortcut",
+    "version": "1.0.0",
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    },
+    "permissions": [
+        "tabs", "storage"
+    ],
+    "commands": {
+        "show-tab-switcher": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Comma"
+            },
+            "description": "Show the Fast Tab Switcher"
+        }
+    },
+    "background": {
+        "scripts": ["js/background-bundle.js"],
+        "persistent": true
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

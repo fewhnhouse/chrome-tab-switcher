@@ -1,0 +1,24 @@
+{
+  "name": "chrome-tab-switcher",
+  "version": "1.0.0",
+  "description": "A chrome plugin to switch tabs via shortcut built with react",
+  "main": "index.js",
+  "author": "Felix Wohnhaas",
+  "license": "MIT",
+  "dependencies": {
+    "mousetrap": "^1.6.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "path": "^0.12.7",
+    "webpack": "^3.6.0"
+  },
+  "scripts": {
+    "build": "webpack"
+  }
+}
