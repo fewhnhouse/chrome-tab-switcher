@@ -101,8 +101,8 @@ class TabSwitcher extends Component {
   // simplifies some race-y areas of the component's lifecycle.
   filteredTabs() {
     return this.state.tabs.filter((val) => {
-      let str = val.title;
-      return str.indexOf(this.state.filter) !== -1;
+      let str = val.title.toLowerCase();
+      return str.indexOf(this.state.filter.toLowerCase()) !== -1;
     }).sort();
     /*if (this.state.filter.trim().length) {
       return tabFilter(this.state.filter, this.state.tabs)
