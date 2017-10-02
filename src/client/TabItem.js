@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDom from 'react-dom';
 import stringSpanner from './string_spanner';
+import Mousetrap from 'mousetrap';    
 
 var MATCH_START = '<span class="match">';
 var MATCH_END = '</span>';
@@ -11,6 +12,11 @@ export default class TabItem extends Component{
     super(props);
     this.onClick = this.onClick.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onClickCloseButton = this.onClickCloseButton.bind(this);
+  }
+
+  componentDidMount() {
+    Mousetrap.bind('del', () => this.props.closeSelected());
   }
   render() {
     /* jshint ignore:start */

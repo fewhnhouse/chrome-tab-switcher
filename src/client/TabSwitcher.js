@@ -24,6 +24,7 @@ class TabSwitcher extends Component {
     this.changeSelected = this.changeSelected.bind(this);
     this.changeSearchAllWindows = this.changeSearchAllWindows.bind(this);
     this.filteredTabs = this.filteredTabs.bind(this);
+    this.close = this.close.bind(this);
 
   }
 
@@ -62,7 +63,7 @@ class TabSwitcher extends Component {
     chrome.runtime.sendMessage({switchToTabId: tab.id});
   }
 
-  close(tab) {
+  closeTab(tab) {
     chrome.runtime.sendMessage({closeTabId: tab.id});
   }
 
@@ -73,11 +74,9 @@ class TabSwitcher extends Component {
     };
     return new Promise((resolve, reject) => {
       chrome.runtime.sendMessage(opts, res => {
-        console.log("msg: ", res);
         resolve(res);
     });
     }).then((val) => {
-      console.log(val);      
       var tabs = val.tabs;
       var lastActive = val.lastActive;
       var firstTab = [];
@@ -102,11 +101,8 @@ class TabSwitcher extends Component {
   // it in the state because it is very much fast enough, and
   // simplifies some race-y areas of the component's lifecycle.
   filteredTabs() {
-    console.log(this.state);
     return this.state.tabs.filter((val) => {
-      console.log("TITLE: ",val.title);
       let str = val.title;
-      console.log(typeof(str));
       return str.indexOf(this.state.filter) !== -1;
     }).sort();
     /*if (this.state.filter.trim().length) {
@@ -147,7 +143,7 @@ class TabSwitcher extends Component {
       this.setState({tabs: tabs});
     }
 
-    tabBroker.close(selected);
+    this.closeTab(selected);
   }
 
   changeFilter(newFilter) {
@@ -178,7 +174,7 @@ class TabSwitcher extends Component {
   }
 
   close() {
-    //window.close();
+    window.close();
   }
 };
 

@@ -11,7 +11,6 @@ export default (chrome) => {
       return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage(opts, res => resolve(res));
       }).then((val) => {
-        console.log(val);
         var tabs = val.tabs;
         var lastActive = val.lastActive;
         var firstTab = [];

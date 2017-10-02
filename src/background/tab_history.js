@@ -1,5 +1,3 @@
-import util from '../util';
-import Q from 'q';
 
 // This module keeps a list of recently activated tabs, and persists
 // it to and from local storage. We use this data to allow the
@@ -9,7 +7,6 @@ export default (chrome) => {
 
   return {
     getFromLocalStorage: function (key) {
-      //return util.pcall(chrome.storage.local.get.bind(chrome.storage.local), key);
       let p = new Promise((resolve, reject) => {
         chrome.storage.local.get(key, (res) => {
           resolve(res);
@@ -19,7 +16,6 @@ export default (chrome) => {
     },
 
     getAllWindows: function () {
-      //return util.pcall(chrome.windows.getAll);
       let p = new Promise((resolve, reject) => {
         chrome.windows.getAll((res) => {
           resolve(res);
@@ -29,10 +25,8 @@ export default (chrome) => {
     },
 
     getActiveTabs: function () {
-      //return util.pcall(chrome.tabs.query.bind(chrome.tabs), {active: true});
       return new Promise((resolve, reject) => {
         chrome.tabs.query({ active: true }, (res) => {
-          console.log("active tabs: ", res);
           resolve(res);
         });
       });
@@ -42,22 +36,11 @@ export default (chrome) => {
       if (!recentTabs) {
         let storeData = this.getFromLocalStorage('lastTabs');
         let windows = this.getAllWindows();
-        console.log(storeData, windows);
-        /*
-        chrome.storage.local.get('lastTabs', (res) => {
-          storeData = res;
-          console.log("lastTabs: ", res);
-        });
-        chrome.windows.getAll((res) => {
-          windows = res;
-          console.log("windows:", res);
-        })
-        */
+
         recentTabs = Promise.all([storeData, windows]).then((val) => {
           let data = val[0];
           let windows = val[1];
           try {
-            console.log("Data, windows: ",val);
             data = JSON.parse(data.lastTabs) || {};
           } catch (error) {
             console.error(error);
@@ -79,7 +62,6 @@ export default (chrome) => {
     },
 
     addRecentTab: function (windowId, tabId, skipIfAlreadyRecent) {
-      console.log("add recent tab");
       return this.getRecentTabs().then(function (tabs) {
         if (!tabs[windowId]) tabs[windowId] = [null];
         if (skipIfAlreadyRecent && tabs[windowId][1] == tabId) return;
@@ -101,7 +83,6 @@ export default (chrome) => {
     },
 
     saveRecentTabs: function () {
-      console.log("Save recent tab");
       return Promise.resolve(recentTabs).then(function (tabs) {
         if (!tabs) return;
         chrome.storage.local.set({ lastTabs: JSON.stringify(tabs) });

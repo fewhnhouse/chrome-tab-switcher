@@ -1,4 +1,3 @@
-import KeybindMixin from './keybind_mixin';
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import Mousetrap from 'mousetrap';
@@ -37,12 +36,10 @@ class TabSearchBox extends Component {
   }
 
   selectPrevious() {
-    console.log("Select prev");
     this.props.modifySelected(-1);
   }
 
   selectNext() {
-    console.log("Select next");
     this.props.modifySelected(1);
   }
 

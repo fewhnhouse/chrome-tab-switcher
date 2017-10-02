@@ -1,4 +1,3 @@
-import KeybindMixin from './keybind_mixin';
 import React, {Component} from 'react';
 import Mousetrap from 'mousetrap';
 
