@@ -103,7 +103,13 @@ class TabSwitcher extends Component {
   // simplifies some race-y areas of the component's lifecycle.
   filteredTabs() {
     console.log(this.state);
-    if (this.state.filter.trim().length) {
+    return this.state.tabs.filter((val) => {
+      console.log("TITLE: ",val.title);
+      let str = val.title;
+      console.log(typeof(str));
+      return str.indexOf(this.state.filter) !== -1;
+    }).sort();
+    /*if (this.state.filter.trim().length) {
       return tabFilter(this.state.filter, this.state.tabs)
       .map(function(result) {
         return result.tab;
@@ -111,6 +117,7 @@ class TabSwitcher extends Component {
     } else {
       return this.state.tabs;
     }
+    */
   }
 
   getSelected() {

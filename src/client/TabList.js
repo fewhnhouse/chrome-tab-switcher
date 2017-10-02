@@ -49,7 +49,7 @@ export default class TabList extends Component {
   }
 
   setScrollTop(val) {
-    ReactDom.findDOMNode().scrollTop = val;
+    ReactDom.findDOMNode(this).scrollTop = val;
   }
 }
 
