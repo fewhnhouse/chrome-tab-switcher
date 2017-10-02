@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import stringScore from 'string-score';
-import tabFilter from './tab_filter';
 import TabSearchBox from './TabSearchBox';
 import TabList from './TabList';
 import StatusBar from './StatusBar';
