@@ -1,5 +1,5 @@
 import TabItem from './TabItem';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 
 export default class TabList extends Component {
@@ -8,7 +8,7 @@ export default class TabList extends Component {
     this.getHeight = this.getHeight.bind(this);
     this.getScrollTop = this.getScrollTop.bind(this);
     this.setScrollTop = this.setScrollTop.bind(this);
-    this.state={
+    this.state = {
       scrollTop: 0,
       height: 0,
     }
@@ -21,11 +21,10 @@ export default class TabList extends Component {
     })
   }
 
-  render(){
+  render() {
     return (
-      /* jshint ignore:start */
       <ul>
-        {this.props.tabs.map(function(tab, i) {
+        {this.props.tabs.map(function (tab, i) {
           return <TabItem tab={tab} key={tab.id} filter={this.props.filter}
             selected={this.props.selectedTab === tab}
             changeSelected={this.props.changeSelected}
@@ -36,7 +35,6 @@ export default class TabList extends Component {
             setContainerScrollTop={this.setScrollTop} />;
         }.bind(this))}
       </ul>
-      /* jshint ignore:end */
     );
   }
 

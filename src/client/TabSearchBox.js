@@ -12,7 +12,7 @@ class TabSearchBox extends Component {
     this.selectPrevious = this.selectPrevious.bind(this);
   }
   componentDidUpdate() {
-    this.nameInput.focus(); 
+    this.nameInput.focus();
   }
 
   componentDidMount() {
@@ -28,10 +28,8 @@ class TabSearchBox extends Component {
 
   render() {
     return (
-      /* jshint ignore:start */
       <input placeholder="Type to filter tabs..." className="mousetrap" type='text' ref={(input) => { this.nameInput = input; }}
         autoFocus='true' onChange={this.onChange} />
-      /* jshint ignore:end */
     );
   }
 

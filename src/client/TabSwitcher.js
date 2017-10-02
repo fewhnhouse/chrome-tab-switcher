@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import stringScore from 'string-score';
 import TabSearchBox from './TabSearchBox';
 import TabList from './TabList';
@@ -34,7 +34,6 @@ class TabSwitcher extends Component {
 
   render() {
     return (
-      /* jshint ignore:start */
       <div>
         <TabSearchBox
           filter={this.state.filter}
@@ -54,16 +53,15 @@ class TabSwitcher extends Component {
           searchAllWindows={this.state.searchAllWindows}
           changeSearchAllWindows={this.changeSearchAllWindows} />
       </div>
-      /* jshint ignore:end */
     );
   }
 
   switchTo(tab) {
-    chrome.runtime.sendMessage({switchToTabId: tab.id});
+    chrome.runtime.sendMessage({ switchToTabId: tab.id });
   }
 
   closeTab(tab) {
-    chrome.runtime.sendMessage({closeTabId: tab.id});
+    chrome.runtime.sendMessage({ closeTabId: tab.id });
   }
 
   query(searchAllWindows) {
@@ -74,13 +72,13 @@ class TabSwitcher extends Component {
     return new Promise((resolve, reject) => {
       chrome.runtime.sendMessage(opts, res => {
         resolve(res);
-    });
+      });
     }).then((val) => {
       var tabs = val.tabs;
       var lastActive = val.lastActive;
       var firstTab = [];
       var otherTabs = [];
-      for(var idx in tabs) {
+      for (var idx in tabs) {
         var tab = tabs[idx];
         if (tab.id === lastActive) firstTab.push(tab);
         else otherTabs.push(tab);
@@ -91,9 +89,9 @@ class TabSwitcher extends Component {
 
   refreshTabs() {
     this.query(this.state.searchAllWindows)
-    .then((val) => {
-      this.setState({tabs: val, selected: null});
-    });
+      .then((val) => {
+        this.setState({ tabs: val, selected: null });
+      });
   }
 
   // We're calculating this on the fly each time instead of caching
@@ -101,18 +99,10 @@ class TabSwitcher extends Component {
   // simplifies some race-y areas of the component's lifecycle.
   filteredTabs() {
     return this.state.tabs.filter((val) => {
-      let str = val.title.toLowerCase();
-      return str.indexOf(this.state.filter.toLowerCase()) !== -1;
+      let title = val.title.toLowerCase();
+      let url = val.url.toLowerCase();
+      return (title.indexOf(this.state.filter.toLowerCase()) !== -1) || (url.indexOf(this.state.filter.toLowerCase()) !== -1);
     }).sort();
-    /*if (this.state.filter.trim().length) {
-      return tabFilter(this.state.filter, this.state.tabs)
-      .map(function(result) {
-        return result.tab;
-      });
-    } else {
-      return this.state.tabs;
-    }
-    */
   }
 
   getSelected() {
@@ -139,18 +129,18 @@ class TabSwitcher extends Component {
     if (index > -1) {
       var tabs = this.state.tabs;
       tabs.splice(index, 1);
-      this.setState({tabs: tabs});
+      this.setState({ tabs: tabs });
     }
 
     this.closeTab(selected);
   }
 
   changeFilter(newFilter) {
-    this.setState({filter: newFilter, selected: null});
+    this.setState({ filter: newFilter, selected: null });
   }
 
   changeSelected(tab) {
-    this.setState({selected: tab});
+    this.setState({ selected: tab });
   }
 
   modifySelected(change) {
@@ -169,7 +159,7 @@ class TabSwitcher extends Component {
   changeSearchAllWindows(value) {
     // TODO: move into a model
     localStorage.setItem('searchAllWindows', JSON.stringify(value));
-    this.setState({searchAllWindows: value}, this.refreshTabs);
+    this.setState({ searchAllWindows: value }, this.refreshTabs);
   }
 
   close() {

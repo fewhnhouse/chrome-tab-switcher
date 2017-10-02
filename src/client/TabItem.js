@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import stringSpanner from './string_spanner';
-import Mousetrap from 'mousetrap';    
+import Mousetrap from 'mousetrap';
 
 var MATCH_START = '<span class="match">';
 var MATCH_END = '</span>';
 
-export default class TabItem extends Component{
+export default class TabItem extends Component {
 
   constructor(props) {
     super(props);
@@ -19,7 +19,6 @@ export default class TabItem extends Component{
     Mousetrap.bind('del', () => this.props.closeSelected());
   }
   render() {
-    /* jshint ignore:start */
     var closeButton = this.props.selected ?
       <div className='close-button' onClick={this.onClickCloseButton}>&times;</div> : null;
 
@@ -29,14 +28,13 @@ export default class TabItem extends Component{
         <div>
           <div className='bkg' style={this.iconBkg(this.props.tab)} />
           <span className='title'
-            dangerouslySetInnerHTML={{__html: this.tabTitle(this.props.tab)}} />
+            dangerouslySetInnerHTML={{ __html: this.tabTitle(this.props.tab) }} />
         </div>
         <div className='url'
-          dangerouslySetInnerHTML={{__html: this.tabUrl(this.props.tab)}} />
+          dangerouslySetInnerHTML={{ __html: this.tabUrl(this.props.tab) }} />
         {closeButton}
       </li>
     );
-    /* jshint ignore:end */
   }
 
   componentDidUpdate() {
@@ -58,7 +56,7 @@ export default class TabItem extends Component{
   }
 
   iconBkg(tab) {
-    return {backgroundImage: "url(" + tab.favIconUrl + ")"};
+    return { backgroundImage: "url(" + tab.favIconUrl + ")" };
   }
 
   className() {
