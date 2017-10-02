@@ -32,7 +32,7 @@ export default (chrome) => {
     },
 
     getLastWindowId: function () {
-      return lastWindowId;
+      return Promise.resolve(lastWindowId);
     },
 
     setLastWindowId: function (id) {
@@ -81,7 +81,8 @@ export default (chrome) => {
       return new Promise((resolve, reject) => {
         chrome.tabs.query(options, (res) => resolve(res));
       }).then((val) => {
-        tabs = val.filter((tab) => tab.id != senderTabId);
+        console.log("querytabs: ",val);
+        let tabs = val.filter((tab) => tab.id != senderTabId);
         return {
           tabs: tabs,
           lastActive: (recentTabs[lastWindowId] || [])[0] || null

@@ -92,7 +92,7 @@ chrome
                 ])
                 .then((val) => {
                     let recentTabs = val[0];
-                    let getLastWindowId = val[1];
+                    let lastWindowId = val[1];
                     return manager.queryTabs(sender.tab.id, request.searchAllWindows, recentTabs, lastWindowId);
                 })
                 .then((val) => {
