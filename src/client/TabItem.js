@@ -41,7 +41,7 @@ export default class TabItem extends Component{
 
   componentDidUpdate() {
     if (this.props.selected) {
-      this.ensureVisible();
+      //this.ensureVisible();
     }
   }
 
