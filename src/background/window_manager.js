@@ -1,87 +1,108 @@
-export default function windowManager(chrome) {
-    var switcherWindowId = Promise.resolve(null);
-    var lastWindowId = Promise.resolve(null);
+import util from '../util';
 
-    return {
-        getTabInfo: function (tabId) {
-            return Promise.resolve(chrome.tabs.get, tabId);
-        },
+export default (chrome) => {
+  let switcherWindowId = Promise.resolve(null);
+  let lastWindowId = Promise.resolve(null);
 
-        getCurrentWindow: function () {
-            return Promise.resolve(chrome.windows.getCurrent);
-        },
+  return {
+    getTabInfo: function (tabId) {
+      //let r =  util.pcall(chrome.tabs.get, tabId);
+      let p = new Promise((resolve, reject) => {
+        chrome.tabs.get(tabId, (res) => resolve(res));
+      })
+      console.log("tabinfo: ", p);
+      return p;
+    },
 
-        getSwitcherWindowId: function () {
-            return switcherWindowId;
-        },
+    getCurrentWindow: function () {
+      //let r =  util.pcall(chrome.windows.getCurrent);
+      let p = new Promise((resolve, reject) => {
+        chrome.windows.getCurrent((res) => resolve(res));
+      })
+      return p;
+    },
 
-        setSwitcherWindowId: function (id) {
-            switcherWindowId = Promise.resolve(id);
-            return switcherWindowId;
-        },
+    getSwitcherWindowId: function () {
+      return switcherWindowId;
+    },
 
-        getLastWindowId: function () {
-            return lastWindowId;
-        },
+    setSwitcherWindowId: function (id) {
+      switcherWindowId = Promise.resolve(id);
+      return switcherWindowId;
+    },
 
-        setLastWindowId: function (id) {
-            lastWindowId = Promise.resolve(id);
-            return lastWindowId;
-        },
+    getLastWindowId: function () {
+      return lastWindowId;
+    },
 
-        showSwitcher: function (width, height, left, top) {
-            var opts = {
-                width: width,
-                height: height,
-                left: left,
-                top: top,
-                url: chrome
-                    .runtime
-                    .getURL('build/html/switcher.html'),
-                focused: true,
-                type: 'popup'
-            };
+    setLastWindowId: function (id) {
+      lastWindowId = Promise.resolve(id);
+      console.log(lastWindowId);
+      return lastWindowId;
+    },
 
-            return Promise.resolve(chrome.windows.create.bind(chrome.windows), opts)
-                .then(function (switcherWindow) {
-                    this.setSwitcherWindowId(switcherWindow.id);
-                }.bind(this));
-        },
+    showSwitcher: function (width, height, left, top) {
+      let opts = {
+        width: width,
+        height: height,
+        left: left,
+        top: top,
+        url: chrome.runtime.getURL('html/switcher.html'),
+        focused: true,
+        type: 'popup'
+      };
 
-        queryTabs: function (senderTabId, searchAllWindows, recentTabs, lastWindowId) {
-            var options = searchAllWindows
-                ? {}
-                : {
-                    windowId: lastWindowId
-                };
-            return Promise
-                .resolve(chrome.tabs.query, options)
-                .then(function (tabs) {
-                    tabs = tabs.filter(function (tab) {
-                        return tab.id != senderTabId;
-                    });
-                    return {
-                        tabs: tabs,
-                        lastActive: (recentTabs[lastWindowId] || [])[0] || null
-                    };
-                });
-        },
+      /*return util.pcall(chrome.windows.create.bind(chrome.windows), opts)
+      .then(function(switcherWindow) {
+        this.setSwitcherWindowId(switcherWindow.id);
+      }.bind(this));
+      */
+      let p = new Promise((resolve, reject) => {
+        chrome.windows.create(opts, (res) => resolve(res))
+      })
+      p.then((val) => {
+        this.setSwitcherWindowId(val.id);
+      });
 
-        switchToTab: function (tabId) {
-            chrome
-                .tabs
-                .update(tabId, {active: true});
-            return this
-                .getTabInfo(tabId)
-                .then(function (tab) {
-                    if (tab) 
-                        chrome.windows.update(tab.windowId, {focused: true});
-                    }
-                );
-        },
+      return p;
+    },
 
-        closeTab: function (tabId) {
-            return Promise.resolve(chrome.tabs.remove, tabId);
-        }
-    };
+    queryTabs: function (senderTabId, searchAllWindows, recentTabs, lastWindowId) {
+      let options = searchAllWindows ? {} : { windowId: lastWindowId };
+      /*return util.pcall(chrome.tabs.query, options)
+        .then(function (tabs) {
+          tabs = tabs.filter(function (tab) { return tab.id != senderTabId; });
+          return {
+            tabs: tabs,
+            lastActive: (recentTabs[lastWindowId] || [])[0] || null
+          };
+        });
+        */
+      return new Promise((resolve, reject) => {
+        chrome.tabs.query(options, (res) => resolve(res));
+      }).then((val) => {
+        tabs = val.filter((tab) => tab.id != senderTabId);
+        return {
+          tabs: tabs,
+          lastActive: (recentTabs[lastWindowId] || [])[0] || null
+        };
+      });
+    },
+
+    switchToTab: function (tabId) {
+      chrome.tabs.update(tabId, { active: true });
+      return this.getTabInfo(tabId).then(function (tab) {
+        if (tab) chrome.windows.update(tab.windowId, { focused: true });
+      });
+    },
+
+    closeTab: function (tabId) {
+      //let r = util.pcall(chrome.tabs.remove, tabId);
+      let p = new Promise((resolve, reject) => {
+        chrome.tabs.remove(tabId, (res) => resolve(res));
+      })
+      console.log("closetab: ", p);
+      return p;
+    }
+  };
 };
