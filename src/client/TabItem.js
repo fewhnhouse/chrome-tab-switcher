@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
-
+import ReactDom from 'react-dom';
 import stringSpanner from './string_spanner';
 
 var MATCH_START = '<span class="match">';
 var MATCH_END = '</span>';
 
 export default class TabItem extends Component{
+
+  constructor(props) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+  }
   render() {
     /* jshint ignore:start */
     var closeButton = this.props.selected ?
@@ -34,7 +40,7 @@ export default class TabItem extends Component{
   }
 
   ensureVisible() {
-    var node = this.getDOMNode();
+    var node = ReactDom.findDOMNode(this);
     var myTop = node.offsetTop;
     var myBottom = myTop + node.offsetHeight;
     var containerScrollTop = this.props.containerScrollTop;

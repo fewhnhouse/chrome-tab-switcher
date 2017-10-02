@@ -1,23 +1,26 @@
 import KeybindMixin from './keybind_mixin';
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
+import Mousetrap from 'mousetrap';
 
 
-class TabSearchBox extends KeybindMixin {
+class TabSearchBox extends Component {
 
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
+    this.selectNext = this.selectNext.bind(this);
+    this.selectPrevious = this.selectPrevious.bind(this);
   }
-  componentDidMount() {
+  componentDidUpdate() {
     this.nameInput.focus(); 
   }
 
   componentDidMount() {
-    this.bindKey('esc', this.props.exit);
-    this.bindKey('enter', this.props.activateSelected);
-    this.bindKey('up', this.selectPrevious);
-    this.bindKey('down', this.selectNext);
+    Mousetrap.bind('esc', this.props.exit);
+    Mousetrap.bind('enter', this.props.activateSelected);
+    Mousetrap.bind('up', this.selectPrevious);
+    Mousetrap.bind('down', this.selectNext);
   }
 
   componentWillUnmount() {
@@ -27,17 +30,19 @@ class TabSearchBox extends KeybindMixin {
   render() {
     return (
       /* jshint ignore:start */
-      <input type='text' ref={(input) => { this.nameInput = input; }}
+      <input className="mousetrap" type='text' ref={(input) => { this.nameInput = input; }}
         autoFocus='true' onChange={this.onChange} />
       /* jshint ignore:end */
     );
   }
 
   selectPrevious() {
+    console.log("Select prev");
     this.props.modifySelected(-1);
   }
 
   selectNext() {
+    console.log("Select next");
     this.props.modifySelected(1);
   }
 

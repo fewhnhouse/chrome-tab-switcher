@@ -1,10 +1,11 @@
 import KeybindMixin from './keybind_mixin';
 import React, {Component} from 'react';
+import Mousetrap from 'mousetrap';
 
-class StatusBar extends KeybindMixin {
+class StatusBar extends Component {
 
   componentDidMount() {
-    this.bindKey(['alt+a'], this.toggleSearchAllWindows);
+    Mousetrap.bind(['alt+a'], this.toggleSearchAllWindows);
   }
 
   render() {

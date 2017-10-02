@@ -7,6 +7,7 @@ export default class KeybindMixin extends Component {
     }
   
     bindKey(key, fn) {
+      console.log("binding key");
       this._boundKeys.push(key);
       Mousetrap.bind(key, function(evt) {
         evt.preventDefault();

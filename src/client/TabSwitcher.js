@@ -120,7 +120,7 @@ class TabSwitcher extends Component {
   activateSelected() {
     var selected = this.getSelected();
     if (selected) {
-      tabBroker.switchTo(selected);
+      this.switchTo(selected);
       this.close();
     }
   }
