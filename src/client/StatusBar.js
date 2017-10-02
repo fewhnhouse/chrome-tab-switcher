@@ -3,6 +3,11 @@ import Mousetrap from 'mousetrap';
 
 class StatusBar extends Component {
 
+  constructor(props) {
+    super(props);
+    this.toggleSearchAllWindows = this.toggleSearchAllWindows.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
   componentDidMount() {
     Mousetrap.bind(['alt+a'], this.toggleSearchAllWindows);
   }
