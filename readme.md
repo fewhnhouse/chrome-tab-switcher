@@ -8,3 +8,5 @@ As this extension is not on The Google Chrome Store yet, it can´t be installed 
 4. Open Google Chrome and navigate to `chrome://extensions`.
 5. Make sure you have developer mode activated and load the `/dist` folder as a unzipped extension.
 6. Have fun using CTS!
+
+This repository is based on https://github.com/BinaryMuse/chrome-fast-tab-switcher
