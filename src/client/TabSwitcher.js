@@ -177,7 +177,7 @@ class TabSwitcher extends Component {
   }
 
   close() {
-    //window.close();
+    window.close();
   }
 };
 
