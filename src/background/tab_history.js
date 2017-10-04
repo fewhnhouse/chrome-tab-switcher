@@ -46,7 +46,7 @@ export default (chrome) => {
             console.error(error);
             data = {};
           }
-          let ids = windows.map((win => win.id.toString());
+          let ids = windows.map(win => win.id.toString());
           // Remove the histories for any windows
           // that have been closed since we last saved.
           for (let key in data) {
