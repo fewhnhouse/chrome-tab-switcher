@@ -1,14 +1,14 @@
 import tabHistory from './background/tab_history';
 import windowManager from './background/window_manager';
 
-var PADDING_TOP = 50;
-var PADDING_BOTTOM = 50;
-var SWITCHER_WIDTH = 600;
+const PADDING_TOP = 50;
+const PADDING_BOTTOM = 50;
+const SWITCHER_WIDTH = 600;
 
-var history = tabHistory(chrome);
-var manager = windowManager(chrome);
+const history = tabHistory(chrome);
+const manager = windowManager(chrome);
 // Persist the tab history to local storage every minute.
-setInterval(function () {
+setInterval(() => {
     history.saveRecentTabs();
 }, 60 * 1000);
 
@@ -16,9 +16,9 @@ setInterval(function () {
 chrome
     .tabs
     .onActivated
-    .addListener(function (tab) {
-        var windowId = tab.windowId;
-        var tabId = tab.tabId;
+    .addListener((tab) => {
+        let windowId = tab.windowId;
+        let tabId = tab.tabId;
         history.addRecentTab(windowId, tabId);
     });
 
@@ -26,7 +26,7 @@ chrome
 chrome
     .windows
     .onRemoved
-    .addListener(function (windowId) {
+    .addListener((windowId) => {
         history.removeHistoryForWindow(windowId);
     });
 
@@ -34,24 +34,23 @@ chrome
 // already the most recent active tab.
 history
     .getActiveTabs()
-    .then(function (tabs) {
-        for (var idx in tabs) {
-            var tab = tabs[idx];
-            var windowId = tab.windowId;
-            var tabId = tab.id;
-        }
+    .then((tabs)=> {
+        tabs.forEach((tab) => {
+            let windowId = tab.windowId;
+            let tabId = tab.id;
+        });
         history.addRecentTab(windowId, tabId, true);
     });
 
 chrome
     .commands
     .onCommand
-    .addListener(function (command) {
+    .addListener((command) => {
         // Users can bind a key to this command in their Chrome keyboard shortcuts, at
         // the bottom of their extensions page.
         if (command === 'show-tab-switcher') {
-            var currentWindow = manager.getCurrentWindow();
-            var switcherWindowId = manager.getSwitcherWindowId();
+            const currentWindow = manager.getCurrentWindow();
+            const switcherWindowId = manager.getSwitcherWindowId();
 
             Promise
                 .all([currentWindow, switcherWindowId])
@@ -59,7 +58,7 @@ chrome
                     let currentWindow = val[0];
                     let switcherWindowId = val[1];
                     // Don't activate the switcher from an existing switcher window.
-                    if (currentWindow.id == switcherWindowId) {
+                    if (currentWindow.id === switcherWindowId) {
                         console.log("rip");
                         return;
                     }
@@ -67,10 +66,10 @@ chrome
                     // enabled, we need to know which was the last non-switcher window that was
                     // active.
                     manager.setLastWindowId(currentWindow.id);
-                    var left = currentWindow.left + Math.round((currentWindow.width - SWITCHER_WIDTH) / 2);
-                    var top = currentWindow.top + PADDING_TOP;
-                    var height = Math.max(currentWindow.height - PADDING_TOP - PADDING_BOTTOM, 600);
-                    var width = SWITCHER_WIDTH;
+                    let left = currentWindow.left + Math.round((currentWindow.width - SWITCHER_WIDTH) / 2);
+                    let top = currentWindow.top + PADDING_TOP;
+                    let height = Math.max(currentWindow.height - PADDING_TOP - PADDING_BOTTOM, 600);
+                    let width = SWITCHER_WIDTH;
 
                     manager.showSwitcher(width, height, left, top);
                 });
@@ -80,7 +79,7 @@ chrome
 chrome
     .runtime
     .onMessage
-    .addListener(function (request, sender, respond) {
+    .addListener((request, sender, respond) => {
         if (request.switchToTabId) {
             manager.switchToTab(request.switchToTabId);
         }

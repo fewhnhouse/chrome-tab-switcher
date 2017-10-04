@@ -1,5 +1,5 @@
 
-export default (chrome) => {
+export default function(chrome) {
   let switcherWindowId = Promise.resolve(null);
   let lastWindowId = Promise.resolve(null);
 

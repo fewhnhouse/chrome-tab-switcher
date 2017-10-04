@@ -28,7 +28,7 @@ class TabSearchBox extends Component {
 
   render() {
     return (
-      <input placeholder="Type to filter tabs..." className="mousetrap" type='text' ref={(input) => { this.nameInput = input; }}
+      <input placeholder="Search Tabs..." className="mousetrap" type='search' ref={(input) => { this.nameInput = input; }}
         autoFocus='true' onChange={this.onChange} />
     );
   }

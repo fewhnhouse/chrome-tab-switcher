@@ -7,7 +7,7 @@ import StatusBar from './StatusBar';
 class TabSwitcher extends Component {
   constructor(props) {
     super(props);
-    var searchAllWindows = localStorage.getItem('searchAllWindows');
+    let searchAllWindows = localStorage.getItem('searchAllWindows');
     searchAllWindows = searchAllWindows ? JSON.parse(searchAllWindows) : false;
     this.state = {
       filter: '',
@@ -65,7 +65,7 @@ class TabSwitcher extends Component {
   }
 
   query(searchAllWindows) {
-    var opts = {
+    let opts = {
       sendTabData: true,
       searchAllWindows: searchAllWindows
     };
@@ -74,15 +74,13 @@ class TabSwitcher extends Component {
         resolve(res);
       });
     }).then((val) => {
-      var tabs = val.tabs;
-      var lastActive = val.lastActive;
-      var firstTab = [];
-      var otherTabs = [];
-      for (var idx in tabs) {
-        var tab = tabs[idx];
-        if (tab.id === lastActive) firstTab.push(tab);
-        else otherTabs.push(tab);
-      }
+      let tabs = val.tabs;
+      let lastActive = val.lastActive;
+      let firstTab = [];
+      let otherTabs = [];
+      tabs.forEach((tab) => {
+        tab.id === lastActive ? firstTab.push(tab) : otherTabs.push(tab);
+      });
       return firstTab.concat(otherTabs);
     });
   }
@@ -110,7 +108,7 @@ class TabSwitcher extends Component {
   }
 
   activateSelected() {
-    var selected = this.getSelected();
+    let selected = this.getSelected();
     if (selected) {
       this.switchTo(selected);
       this.close();
@@ -118,16 +116,15 @@ class TabSwitcher extends Component {
   }
 
   closeSelected() {
-    /* jshint expr: true */
-    var selected = this.getSelected();
-    var index = this.state.tabs.indexOf(selected);
+    let selected = this.getSelected();
+    let index = this.state.tabs.indexOf(selected);
 
     if (selected) {
       this.modifySelected(1) || this.modifySelected(-1);
     }
 
     if (index > -1) {
-      var tabs = this.state.tabs;
+      let tabs = this.state.tabs;
       tabs.splice(index, 1);
       this.setState({ tabs: tabs });
     }
@@ -144,14 +141,14 @@ class TabSwitcher extends Component {
   }
 
   modifySelected(change) {
-    var filteredTabs = this.filteredTabs();
+    let filteredTabs = this.filteredTabs();
     if (!filteredTabs.length) return;
 
-    var currentIndex = filteredTabs.indexOf(this.getSelected());
-    var newIndex = currentIndex + change;
+    let currentIndex = filteredTabs.indexOf(this.getSelected());
+    let newIndex = currentIndex + change;
     if (newIndex < 0) return false;
     if (newIndex >= filteredTabs.length) return false;
-    var newTab = filteredTabs[newIndex];
+    let newTab = filteredTabs[newIndex];
     this.changeSelected(newTab);
     return true;
   }
