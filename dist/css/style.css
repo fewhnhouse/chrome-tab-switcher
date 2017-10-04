@@ -96,6 +96,13 @@ ul li .title {
     overflow: hidden;
 }
 
+ul li .searchtitle {
+    text-overflow: ellipsis;
+    width: calc(100%-50px);
+    padding-top: 10px;
+    overflow: hidden;
+}
+
 ul li .url {
     color: #666;
     margin-left: 21px;

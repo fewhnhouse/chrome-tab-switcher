@@ -107,4 +107,10 @@ chrome
         if (request.closeTabId) {
             manager.closeTab(request.closeTabId);
         }
+
+        if (request.openTab) {
+            let url = `https://www.google.de/search?q=${request.openTab}`;
+            let currentWindow = manager.getCurrentWindow();            
+            chrome.tabs.create({windowId: currentWindow.id, url: url});
+        }
     });

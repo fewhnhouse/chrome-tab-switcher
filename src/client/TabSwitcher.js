@@ -60,7 +60,9 @@ class TabSwitcher extends Component {
   switchTo(tab) {
     chrome.runtime.sendMessage({ switchToTabId: tab.id });
   }
-
+  openTab(tab) {
+    chrome.runtime.sendMessage({openTab: tab});
+  }
   closeTab(tab) {
     chrome.runtime.sendMessage({ closeTabId: tab.id });
   }
@@ -129,6 +131,10 @@ class TabSwitcher extends Component {
     if (selected) {
       this.switchTo(selected);
       this.close();
+      console.log("selected");
+    } else {
+      console.log("not selected");
+      this.openTab(this.state.filter);
     }
   }
 
