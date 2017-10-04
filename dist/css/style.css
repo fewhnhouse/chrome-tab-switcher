@@ -83,6 +83,14 @@ ul li .bkg {
     background-size: 16px 16px;
 }
 
+ul li .searchbkg {
+    width: 16px;
+    height: 16px;
+    margin: 10px;
+    display: inline-block;
+    background-size: 16px 16px;
+}
+
 ul li .match {
     text-decoration: underline;
     font-weight: bold;
@@ -97,10 +105,8 @@ ul li .title {
 }
 
 ul li .searchtitle {
-    text-overflow: ellipsis;
-    width: calc(100%-50px);
     padding-top: 10px;
-    overflow: hidden;
+    padding-bottom: 10px;
 }
 
 ul li .url {

@@ -41,10 +41,8 @@ export default class TabList extends Component {
       return (
         <ul>
           <li className="selected">
-            <div>
-              <div className='bkg' style={{ backgroundImage: "url('https://www.google.de/images/branding/product/ico/googleg_lodp.ico')" }} />
-              <span className='searchtitle'>Perform Google Search: <b><u>{this.props.filter}</u></b></span>
-            </div>
+              <div className='searchbkg' style={{ backgroundImage: "url('https://www.google.de/images/branding/product/ico/googleg_lodp.ico')" }} />
+              <span className='title searchtitle' onClick={this.props.activateSelected}>Perform Google Search: <b><u>{this.props.filter}</u></b></span>
           </li>
         </ul>
       )
