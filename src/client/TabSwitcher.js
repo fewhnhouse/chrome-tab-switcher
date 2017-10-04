@@ -1,8 +1,9 @@
+/*global chrome */
 import React, { Component } from 'react';
-import stringScore from 'string-score';
 import TabSearchBox from './TabSearchBox';
 import TabList from './TabList';
 import StatusBar from './StatusBar';
+import 'string_score';
 
 class TabSwitcher extends Component {
   constructor(props) {
@@ -96,11 +97,27 @@ class TabSwitcher extends Component {
   // it in the state because it is very much fast enough, and
   // simplifies some race-y areas of the component's lifecycle.
   filteredTabs() {
-    return this.state.tabs.filter((val) => {
+    let filteredArray =  this.state.tabs.filter((val) => {
       let title = val.title.toLowerCase();
       let url = val.url.toLowerCase();
-      return (title.indexOf(this.state.filter.toLowerCase()) !== -1) || (url.indexOf(this.state.filter.toLowerCase()) !== -1);
-    }).sort();
+      return title.includes(this.state.filter.toLowerCase()) || url.includes(this.state.filter.toLowerCase());
+    });
+    let arr = filteredArray.map((el) => {
+      let titleScore = el.title.trim().score(this.state.filter.trim()) * 2;
+      let urlScore = el.url.trim().score(this.state.filter.trim());
+      let higherScore = titleScore >= urlScore ?
+      titleScore : urlScore;
+      return {
+        tab: el,
+        score: higherScore
+      };
+    });
+    if (this.state.filter !== "") {
+      return arr.filter((res) => res.score > 0).sort((a, b) => b.score - a.score).map(el => el.tab);
+    } else {
+      return arr.map(el => el.tab);
+    }
+
   }
 
   getSelected() {
@@ -160,7 +177,7 @@ class TabSwitcher extends Component {
   }
 
   close() {
-    window.close();
+    //window.close();
   }
 };
 

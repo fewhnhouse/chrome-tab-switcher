@@ -1,3 +1,4 @@
+/*global chrome */
 import tabHistory from './background/tab_history';
 import windowManager from './background/window_manager';
 

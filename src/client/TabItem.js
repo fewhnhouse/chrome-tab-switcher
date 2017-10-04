@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 import stringSpanner from './string_spanner';
 import Mousetrap from 'mousetrap';
 
@@ -44,7 +44,7 @@ export default class TabItem extends Component {
   }
 
   ensureVisible() {
-    var node = ReactDom.findDOMNode(this);
+    var node = ReactDOM.findDOMNode(this);
     var myTop = node.offsetTop;
     var myBottom = myTop + node.offsetHeight;
     var containerScrollTop = this.props.containerScrollTop;

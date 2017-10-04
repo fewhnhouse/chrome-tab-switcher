@@ -1,6 +1,6 @@
 import TabItem from './TabItem';
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 
 export default class TabList extends Component {
   constructor(props) {
@@ -39,15 +39,15 @@ export default class TabList extends Component {
   }
 
   getHeight() {
-    return ReactDom.findDOMNode(this).offsetHeight;
+    return ReactDOM.findDOMNode(this).offsetHeight;
   }
 
   getScrollTop() {
-    return ReactDom.findDOMNode(this).scrollTop;
+    return ReactDOM.findDOMNode(this).scrollTop;
   }
 
   setScrollTop(val) {
-    ReactDom.findDOMNode(this).scrollTop = val;
+    ReactDOM.findDOMNode(this).scrollTop = val;
   }
 }
 
