@@ -36,9 +36,10 @@ chrome
 history
     .getActiveTabs()
     .then((tabs)=> {
+        let [windowId, tabId] = [0,0];
         tabs.forEach((tab) => {
-            let windowId = tab.windowId;
-            let tabId = tab.id;
+            windowId = tab.windowId;
+            tabId = tab.id;
         });
         history.addRecentTab(windowId, tabId, true);
     });
