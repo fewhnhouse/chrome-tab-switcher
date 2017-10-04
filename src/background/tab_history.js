@@ -6,7 +6,7 @@ export default (chrome) => {
   let recentTabs = null;
 
   return {
-    getFromLocalStorage: function (key) {
+    getFromLocalStorage: (key) => {
       let p = new Promise((resolve, reject) => {
         chrome.storage.local.get(key, (res) => {
           resolve(res);
@@ -15,7 +15,7 @@ export default (chrome) => {
       return p;
     },
 
-    getAllWindows: function () {
+    getAllWindows: () => {
       let p = new Promise((resolve, reject) => {
         chrome.windows.getAll((res) => {
           resolve(res);
@@ -24,7 +24,7 @@ export default (chrome) => {
       return p;
     },
 
-    getActiveTabs: function () {
+    getActiveTabs: () => {
       return new Promise((resolve, reject) => {
         chrome.tabs.query({ active: true }, (res) => {
           resolve(res);
@@ -32,7 +32,7 @@ export default (chrome) => {
       });
     },
 
-    getRecentTabs: function () {
+    getRecentTabs: () => {
       if (!recentTabs) {
         let storeData = this.getFromLocalStorage('lastTabs');
         let windows = this.getAllWindows();
@@ -46,7 +46,7 @@ export default (chrome) => {
             console.error(error);
             data = {};
           }
-          let ids = windows.map(function (win) { return win.id.toString(); });
+          let ids = windows.map((win => win.id.toString());
           // Remove the histories for any windows
           // that have been closed since we last saved.
           for (let key in data) {
@@ -61,8 +61,8 @@ export default (chrome) => {
       return recentTabs;
     },
 
-    addRecentTab: function (windowId, tabId, skipIfAlreadyRecent) {
-      return this.getRecentTabs().then(function (tabs) {
+    addRecentTab: (windowId, tabId, skipIfAlreadyRecent) => {
+      return this.getRecentTabs().then((tabs) => {
         if (!tabs[windowId]) tabs[windowId] = [null];
         if (skipIfAlreadyRecent && tabs[windowId][1] == tabId) return;
         tabs[windowId].push(tabId);
@@ -75,15 +75,15 @@ export default (chrome) => {
       });
     },
 
-    removeHistoryForWindow: function (windowId) {
-      return this.getRecentTabs().then(function (tabs) {
+    removeHistoryForWindow: (windowId) => {
+      return this.getRecentTabs().then((tabs) => {
         delete tabs[windowId];
         recentTabs = Promise.resolve(tabs);
       });
     },
 
-    saveRecentTabs: function () {
-      return Promise.resolve(recentTabs).then(function (tabs) {
+    saveRecentTabs: () => {
+      return Promise.resolve(recentTabs).then((tabs) => {
         if (!tabs) return;
         chrome.storage.local.set({ lastTabs: JSON.stringify(tabs) });
       });
