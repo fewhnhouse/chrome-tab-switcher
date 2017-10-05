@@ -2877,10 +2877,6 @@ stream-http@^2.3.1:
     to-arraybuffer "^1.0.0"
     xtend "^4.0.0"
 
-string-score@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/string-score/-/string-score-1.0.1.tgz#a1f31910705a119337a506ca718b1e85df12dd58"
-
 string-width@^1.0.1, string-width@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-1.0.2.tgz#118bdf5b8cdc51a2a7e70d211e07e2b0b9b107d3"
@@ -2905,6 +2901,10 @@ string_decoder@~1.0.3:
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.3.tgz#0fc67d7c141825de94282dd536bec6b9bce860ab"
   dependencies:
     safe-buffer "~5.1.0"
+
+string_score@^0.1.22:
+  version "0.1.22"
+  resolved "https://registry.yarnpkg.com/string_score/-/string_score-0.1.22.tgz#80e112223aeef30969d8502f38db72a768eaa8fd"
 
 stringstream@~0.0.4:
   version "0.0.5"

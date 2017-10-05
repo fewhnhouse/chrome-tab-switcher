@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import TabSearchBox from './TabSearchBox';
 import TabList from './TabList';
 import StatusBar from './StatusBar';
-import 'string_score';
+import score from 'string_score';
 
 class TabSwitcher extends Component {
   constructor(props) {
@@ -61,7 +61,7 @@ class TabSwitcher extends Component {
     chrome.runtime.sendMessage({ switchToTabId: tab.id });
   }
   openTab(tab) {
-    chrome.runtime.sendMessage({openTab: tab});
+    chrome.runtime.sendMessage({ openTab: tab });
   }
   closeTab(tab) {
     chrome.runtime.sendMessage({ closeTabId: tab.id });
@@ -99,7 +99,7 @@ class TabSwitcher extends Component {
   // it in the state because it is very much fast enough, and
   // simplifies some race-y areas of the component's lifecycle.
   filteredTabs() {
-    let filteredArray =  this.state.tabs.filter((val) => {
+    let filteredArray = this.state.tabs.filter((val) => {
       let title = val.title.toLowerCase();
       let url = val.url.toLowerCase();
       return title.includes(this.state.filter.toLowerCase()) || url.includes(this.state.filter.toLowerCase());
@@ -108,7 +108,7 @@ class TabSwitcher extends Component {
       let titleScore = el.title.trim().score(this.state.filter.trim()) * 2;
       let urlScore = el.url.trim().score(this.state.filter.trim());
       let higherScore = titleScore >= urlScore ?
-      titleScore : urlScore;
+        titleScore : urlScore;
       return {
         tab: el,
         score: higherScore
@@ -183,7 +183,7 @@ class TabSwitcher extends Component {
   }
 
   close() {
-    //window.close();
+    window.close();
   }
 };
 
