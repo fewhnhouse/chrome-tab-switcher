@@ -18,7 +18,7 @@
     "babel-preset-react": "^6.24.1",
     "eslint": "^4.8.0",
     "path": "^0.12.7",
-    "webpack": "^3.6.0"
+    "webpack": "^4.41.2"
   },
   "scripts": {
     "build": "webpack --watch"
